@@ -1,0 +1,22 @@
+{
+  "name": "amarbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kharazian/AmarBot1400.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kharazian/AmarBot1400/issues"
+  },
+  "homepage": "https://github.com/kharazian/AmarBot1400#readme",
+  "dependencies": {
+    "chromedriver": "^90.0.0"
+  }
+}
