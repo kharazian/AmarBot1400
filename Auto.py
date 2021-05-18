@@ -12,7 +12,8 @@ import jdatetime
 dirname = 'D:\\Report\\1400\\TabdilVaz'
 progDirname = os.path.dirname(__file__)
 currentDirname = os.getcwd()
-       
+delaytime = 3
+
 chromedriver_path = r'D://chromedriver/chromedriver.exe' # Change this to your own chromedriver path!
 webdriver = webdriver.Chrome(executable_path=chromedriver_path)
 # webdriver.set_window_size(1920, 1080)
@@ -42,15 +43,19 @@ def sendFile(id, txt):
     el.send_keys(txt)
 
 def getFirstPage():
-    # داشبورد مدیریت
-    webdriver.get('https://amar.imo.org.ir/member/-_-irn-l-14000277232')
-    webdriver.find_element_by_xpath("//*[contains(text(),'نمایش داده های آماری')]/..").click()
-    sleep(delaytime)
-    mainFrame = webdriver.find_element_by_xpath("//iframe")
-    # webdriver.switch_to_frame('_cartable_WAR_Cartableportlet_dashboard-application_iframe_')
-    webdriver.switch_to.frame(mainFrame)
-    webdriver.find_element_by_xpath("//*[contains(text(),'مجموعه اطلاعات جامع اداری و استخدامی')]").click()
-    webdriver.find_element_by_xpath("//*[contains(text(),'فرم شماره 3- اطلاعات جامع نیروهای شرکتی')]").click()
+    try:
+        # داشبورد مدیریت
+        webdriver.get('https://amar.imo.org.ir/member/-_-irn-l-14000277232')
+        webdriver.find_element_by_xpath("//*[contains(text(),'نمایش داده های آماری')]/..").click()
+        sleep(delaytime)
+        mainFrame = webdriver.find_element_by_xpath("//iframe")
+        # webdriver.switch_to_frame('_cartable_WAR_Cartableportlet_dashboard-application_iframe_')
+        webdriver.switch_to.frame(mainFrame)
+        webdriver.find_element_by_xpath("//*[contains(text(),'مجموعه اطلاعات جامع اداری و استخدامی')]").click()
+        webdriver.find_element_by_xpath("//*[contains(text(),'فرم شماره 3- اطلاعات جامع نیروهای شرکتی')]").click()
+    except:
+        getFirstPage()
+
 
 def writeExcelCell(excelWB, index, cell1, cell2, cell3, cell4):
     ws['AM'+str(index)] = cell1
@@ -82,7 +87,7 @@ print(forms)
 companies = ['SH']
 forms = ['Frm3']
 i = 0
-delaytime = 3
+
 attachmentError = ''
 
 getFirstPage()
@@ -144,7 +149,8 @@ for company in companies:
                     selectOption(9,values[8])
                     sendDate(10,values[9])
                     selectOption(11,values[10])
-                    sendInput(12,values[11])
+                    if(values[10] == 1):
+                        sendInput(12,values[11])
                     selectOption(13,values[12])                    
                     if(values[12] == 1):
                         selectOption(14,values[13])                    
@@ -196,21 +202,24 @@ for company in companies:
                     else:
                         webdriver.find_element_by_xpath('/html/body/div/div/div/div/div/div/div/section[2]/form/fieldset/div/div/fieldset/div/div[3]/button[2]').click()# finish     
                     sleep(delaytime)
-                    
-                    webdriver.find_element_by_xpath('/html/body/div/div/div/div/div/div/div/section[2]/form/div/div[2]/button').click()# finish     
+                    # 
+                    # webdriver.find_element_by_xpath('/html/body/div/div/div/div/div/div/div/section[2]/form/div/div[2]/button').click()# finish     
                                                                     
-                    if(attachmentError == ''):
-                        added += 1
-                        writeExcelCell(ws, index, 'added', '', '', '')
-                        print('{0} Frm3 : {1} - {2} {3:3.0f}% Adeed {4} '.format(company,index,total,index/total*100,values[4]))
+                    # if(attachmentError == ''):
+                    added += 1
+                    writeExcelCell(ws, index, 'added', attachmentError, '', '')
+                    print('{0} Frm3 : {1} - {2} {3:3.0f}% Adeed {4} '.format(company,index,total,index/total*100,values[4]))
 
-                    else:
-                        withError += 1
-                        writeExcelCell(ws, index, "error", 'attachment', attachmentError, '')
-                        print('{0} Frm3 : {1} - {2} {3:3.0f}% Adeed AttachmentError {4} - {5}'.format(company,index,total,index/total*100,values[4], attachmentError))
+                    # else:
+                    #     withError += 1
+                    #     writeExcelCell(ws, index, "error", 'attachment', attachmentError, '')
+                    #     print('{0} Frm3 : {1} - {2} {3:3.0f}% Adeed AttachmentError {4} - {5}'.format(company,index,total,index/total*100,values[4], attachmentError))
                    
                     getFirstPage()
-
+                    try:
+                        wb.save(os.path.join(dirname, company+excelfile))
+                    except:
+                        print('file open') 
                    
             except:
                 writeExcelCell(ws, index, "error", col[i], values[i], '')
