@@ -183,7 +183,7 @@ for company in companies:
                     else:
                         sendFile(27,attachmentFile)# مدرک تحصیلی
 
-                    attachmentFile = os.path.join(dirname,company+'\\'+values[4]+'.pdf')
+                    attachmentFile = os.path.join(dirname,company+'\\'+values[4]+'s.pdf')
                     if(not(os.path.exists(attachmentFile))):
                         attachmentFile = temp
                         attachmentError = attachmentError + ' s'
@@ -203,8 +203,8 @@ for company in companies:
                         webdriver.find_element_by_xpath('/html/body/div/div/div/div/div/div/div/section[2]/form/fieldset/div/div/fieldset/div/div[3]/button[2]').click()# finish     
                     sleep(delaytime)
                     # 
-                    # webdriver.find_element_by_xpath('/html/body/div/div/div/div/div/div/div/section[2]/form/div/div[2]/button').click()# finish     
-                                                                    
+                    webdriver.find_element_by_xpath('/html/body/div/div/div/div/div/div/div/section[2]/form/div/div[2]/button').click()# finish     
+                    sleep(delaytime)                                                
                     # if(attachmentError == ''):
                     added += 1
                     writeExcelCell(ws, index, 'added', attachmentError, '', '')
