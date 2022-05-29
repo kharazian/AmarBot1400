@@ -149,17 +149,23 @@ for company in companies:
                     selectOption(9,values[8])
                     sendDate(10,values[9])
                     selectOption(11,values[10])
-                    if(values[10] == 1):
+                    if(values[10] != "1"):
                         sendInput(12,values[11])
                     selectOption(13,values[12])                    
-                    if(values[12] == 1):
-                        selectOption(14,values[13])                    
-                        sendDate(15,values[14])
-                        sendDate(16,values[15])
-                        sendDate(17,values[16])
-                        sendInput(18,values[17])
-                        sendDate(19,values[18])
-                        sendDate(20,values[19])
+                    if(values[12] == "1"):
+                        selectOption(14,values[13])
+                        if(values[14] != ""):                 
+                            sendDate(15,values[14])
+                        if(values[15] != ""):                 
+                            sendDate(16,values[15])
+                        if(values[16] != ""):                 
+                            sendDate(17,values[16])
+                        if(values[17] != ""):                 
+                            sendInput(18,values[17])
+                        if(values[18] != ""):                 
+                            sendDate(19,values[18])
+                        if(values[19] != ""):                 
+                            sendDate(20,values[19])
                     sendDate(21,values[20])
                     sendDate(22,values[21])
                     sendInput(23,values[25])
@@ -197,10 +203,11 @@ for company in companies:
                     else:
                         sendFile(29,attachmentFile)# قرارداد        
 
-                    if(AddOrUpdate == "add"):
+                    try:                    
                         webdriver.find_element_by_xpath('/html/body/div/div/div/div/div/div/div/section[2]/form/fieldset/div/div/fieldset/div/div[2]/button[2]').click()# finish     
-                    else:
+                    except:
                         webdriver.find_element_by_xpath('/html/body/div/div/div/div/div/div/div/section[2]/form/fieldset/div/div/fieldset/div/div[3]/button[2]').click()# finish     
+                    
                     sleep(delaytime)
                     # 
                     webdriver.find_element_by_xpath('/html/body/div/div/div/div/div/div/div/section[2]/form/div/div[2]/button').click()# finish     

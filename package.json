@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/kharazian/AmarBot1400#readme",
   "dependencies": {
-    "chromedriver": "^90.0.0"
+    "chromedriver": "^90.0.1"
   }
 }
